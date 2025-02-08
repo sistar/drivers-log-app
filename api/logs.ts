@@ -9,13 +9,12 @@ if (!uri) {
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  let client: MongoClient;
+  let client!: MongoClient;
   try {
     client = new MongoClient(uri);
     await client.connect();
-    const db = client.db("YOUR_DB_NAME"); // replace with your database name
-    const collection = db.collection("YOUR_COLLECTION_NAME"); // replace with your collection name
-
+    const db = client.db("weconnect"); 
+    const collection = db.collection("vehicle_events"); 
     const logs = await collection.find({}).toArray();
     res.status(200).json(logs);
   } catch (error) {
