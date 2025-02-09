@@ -8,18 +8,20 @@ if (!uri) {
   throw new Error("Please define the MONGODB_URI environment variable.");
 }
 
+const client = new MongoClient(uri);
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  let client!: MongoClient;
   try {
-    client = new MongoClient(uri);
     await client.connect();
-    const db = client.db("weconnect"); 
-    const collection = db.collection("vehicle_events"); 
-    const logs = await collection.find({}).toArray();
-    res.status(200).json(logs);
+    const database = client.db('driverslog');
+    const logs = database.collection('logs');
+    
+    const result = await logs.find({}).toArray();
+    
+    res.status(200).json(result);
   } catch (error) {
-    console.error("Error fetching logs:", error);
-    res.status(500).json({ error: "Failed to fetch logs" });
+    console.error('Database error:', error);
+    res.status(500).json({ error: 'Failed to fetch logs' });
   } finally {
     await client.close();
   }
