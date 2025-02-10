@@ -65,7 +65,7 @@ const App: React.FC = () => {
 
   // Fetch parking events from our API endpoint
   useEffect(() => {
-    fetch("/api/logs")
+    fetch("https://drivers-log-app-backend.onrender.com/api/logs")
       .then((res) => {
         if (!res.ok) {
           console.error("Failed to fetch logs:", res);
