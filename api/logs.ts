@@ -13,8 +13,8 @@ const client = new MongoClient(uri);
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     await client.connect();
-    const database = client.db('driverslog');
-    const logs = database.collection('logs');
+    const database = client.db('weconnect');
+    const logs = database.collection('vehicle_events');
     
     const result = await logs.find({}).toArray();
     
